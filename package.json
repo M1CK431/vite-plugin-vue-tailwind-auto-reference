@@ -1,0 +1,39 @@
+{
+  "name": "vite-plugin-vue-tailwind-auto-reference",
+  "version": "1.0.0",
+  "description": "Automatically @reference your Tailwind CSS file in Vue SFC <style> blocks.",
+  "repository": "https://github.com/M1CK431/vite-plugin-vue-tailwind-auto-reference",
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "dev": "tsc --watch",
+    "build": "tsc",
+    "lint": "eslint ."
+  },
+  "keywords": [
+    "vite",
+    "vite-plugin",
+    "css",
+    "vue",
+    "sfc",
+    "tailwind"
+  ],
+  "author": "M1CK431",
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "^9.23.0",
+    "@types/node": "^22.13.13",
+    "eslint": "^9.23.0",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.28.0"
+  },
+  "dependencies": {
+    "vite": "^6.2.3"
+  }
+}
