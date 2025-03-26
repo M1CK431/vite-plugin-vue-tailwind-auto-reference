@@ -53,7 +53,7 @@ If it is located elsewhere, you can specify it using the `cssFile` option.
 ```js
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import tailwindAutoReference from 'tailwind-auto-reference';
+import tailwindAutoReference from 'vite-plugin-vue-tailwind-auto-reference';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
@@ -145,7 +145,7 @@ Here's an example of how you might use this plugin in a Vue project:
 // vite.config.js
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import tailwindAutoReference from 'tailwind-auto-reference';
+import tailwindAutoReference from 'vite-plugin-vue-tailwind-auto-reference';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
