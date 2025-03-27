@@ -2,22 +2,21 @@
 
 <p align="center">
 <a href="https://github.com/M1CK431/vite-plugin-vue-tailwind-auto-reference/releases" alt="GitHub release"><img src="https://img.shields.io/github/v/release/M1CK431/vite-plugin-vue-tailwind-auto-reference.svg" ></a>
-<a href="LICENSE" alt="License: MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
-<a href="https://www.npmjs.com/package/vite-plugin-vue-tailwind-auto-reference" alt="NPM release"><img src="https://img.shields.io/npm/v/vite-plugin-vue-tailwind-auto-reference-red.svg" ></a>
-<a href="https://www.npmjs.com/package/vite-plugin-vue-tailwind-auto-reference" alt="NPM downloads"><img src="https://img.shields.io/npm/dw/vite-plugin-vue-tailwind-auto-reference-limegreen.svg" ></a>
+<a href="LICENSE" alt="License: MIT"><img src="https://img.shields.io/badge/License-MIT-blue"></a>
+<a href="https://www.npmjs.com/package/vite-plugin-vue-tailwind-auto-reference" alt="NPM downloads"><img src="https://img.shields.io/npm/dw/vite-plugin-vue-tailwind-auto-reference?color=limegreen" ></a>
 </p>
 
 A Vite plugin that **automatically adds `@reference` directive to Vue SFC `<style>` blocks** (if it contains `@apply`). This is done at Vite code transformation step so **nothing will be added in your codebase!** 👻
 
-⚡ This seamless integration allows developers to leverage Tailwind CSS 4 features while **maintaining compatibility** with their existing codebase, making migration a breeze.
+⚡ This seamless integration allows developers to leverage [Tailwind CSS v4](https://tailwindcss.com/) features while **maintaining compatibility** with their existing codebase, making migration a breeze.
 
-⚡ By automatically handling `@reference` directive, this plugin **ensures consistent styling** across your application as you transition to the new version of Tailwind.
+⚡ By automatically handling `@reference` directive, this plugin **ensures consistent styling** across your application as you transition to Tailwind Tailwind CSS v4.
 
-⚡ Whether you're migrating from Tailwind CSS v3 or just starting out with Tailwind CSS v4, this plugin provides an **efficient way to manage styles** in your Vue projects.
+⚡ Whether you're migrating from Tailwind CSS v3 or just starting out with Tailwind CSS v4, this plugin provides an **efficient way to globally manage styles** in your Vue projects.
 
 ## Compatibility
 
-This plugin was tested with Node 20+, Vite 6, Vue 3.5 and Tailwind CSS 4.
+This plugin was tested with Node 20+, Vite 6, Vue 3.5 and Tailwind CSS v4.
 It might (should) works with older versions too, but it's untested and no support will be provided.
 
 ## Installation
@@ -46,7 +45,7 @@ pnpm add -D vite-plugin-vue-tailwind-auto-reference
 
 To use the plugin, simply import and register it in your Vite configuration file (`vite.config.js` or `vite.config.ts`).\
 By default, the plugin assume your css file is located at `src/index.css`.
-If it is located elsewhere, you can specify it using the `cssFile` option.
+If it is located elsewhere, you can specify it using the [`cssFile` option](#advanced-configuration).
 
 ⚠️ **It must be registered before `tailwindcss()` official plugin!** ⚠️
 
@@ -65,11 +64,29 @@ export default defineConfig({
 });
 ```
 
+Then, use `@apply` directive in your Vue component `<style>` block as usual.
+
+```vue
+<template>
+  <div class="myClass">
+    Hello, Tailwind!
+  </div>
+</template>
+
+<style scoped>
+.myClass {
+  @apply bg-blue-500 text-white p-4;
+}
+</style>
+```
+
 ### Advanced Configuration
 
-The plugin accepts a configuration object that allows you to customize its behavior.
+The plugin accepts two parameters:
+1. `cssFile`: The path to the Tailwind CSS file.
+2. `opts`: An options object that allows you to customize its behavior.
 
-#### Options
+#### Parameters details
 
 - **cssFile** (string | string[] | CssFileFn): The path to the Tailwind CSS file or an array of paths.
 You can also provide a function that returns the path(s).
@@ -112,7 +129,7 @@ The default CSS file is `./src/index.css`.
   })
   ```
 
-- **include** (FilterPattern): A list of picomatch patterns that match files to be transformed. The default pattern is `[/\.vue\?.*type=style/]`.
+- **opts.include** (FilterPattern): A list of picomatch patterns that match files to be transformed. The default pattern is `[/\.vue\?.*type=style/]`.
 
   ```js
   tailwindAutoReference('./src/tailwind.css', {
@@ -120,7 +137,7 @@ The default CSS file is `./src/index.css`.
   })
   ```
 
-- **exclude** (FilterPattern): A list of picomatch patterns that match files to be excluded from transformation.
+- **opts.exclude** (FilterPattern): A list of picomatch patterns that match files to be excluded from transformation.
 
   ```js
   tailwindAutoReference('./src/tailwind.css', {
@@ -128,7 +145,7 @@ The default CSS file is `./src/index.css`.
   })
   ```
 
-- **skip** (SkipFn): A function that determines whether a file should be skipped. It takes the code and id as arguments and returns a boolean.
+- **opts.skip** (SkipFn): A function that determines whether a file should be skipped. It takes the code and id as arguments and returns a boolean.
 
   ```js
   tailwindAutoReference('./src/tailwind.css', {
