@@ -1,5 +1,5 @@
 import { resolve } from "node:path"
-import { createFilter, FilterPattern, ResolvedConfig } from "vite"
+import { createFilter, FilterPattern, ResolvedConfig, Plugin } from "vite"
 
 
 /**
@@ -64,7 +64,7 @@ const resolveFn = (fn: unknown, ...args: unknown[]) =>
 const tailwindAutoReference = (
   cssFile: string | string[] | CssFileFn = "./src/index.css",
   opts = defaultOpts
-) => {
+): Plugin => {
   const { include, exclude, skip } = { ...defaultOpts, ...opts }
   let root: string, fileFilter: (id: string | unknown) => boolean
 
