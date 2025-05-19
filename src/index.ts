@@ -85,7 +85,10 @@ const tailwindAutoReference = (
       if (!fileFilter(id)) return code
       if (!code.includes("@apply ") || skip(code, id)) return code
 
-      return `${getReferenceStr(await resolveFn(cssFile, code, id))}${code}`
+      return {
+        code: `${getReferenceStr(await resolveFn(cssFile, code, id))}${code}`,
+        map: null
+      }
     }
   }
 }
