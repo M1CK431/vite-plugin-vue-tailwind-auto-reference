@@ -82,10 +82,13 @@ const tailwindAutoReference = (
       fileFilter = createFilter(include, exclude, { resolve: root })
     },
     transform: async (code: string, id: string) => {
-      if (!fileFilter(id)) return code
-      if (!code.includes("@apply ") || skip(code, id)) return code
+      if (!fileFilter(id)) return null
+      if (!code.includes("@apply ") || skip(code, id)) return null
 
-      return `${getReferenceStr(await resolveFn(cssFile, code, id))}${code}`
+      return {
+        code: `${getReferenceStr(await resolveFn(cssFile, code, id))}${code}`,
+        map: null
+      }
     }
   }
 }
