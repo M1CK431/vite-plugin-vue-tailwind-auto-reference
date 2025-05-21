@@ -85,8 +85,18 @@ const tailwindAutoReference = (
       if (!fileFilter(id)) return null
       if (!code.includes("@apply ") || skip(code, id)) return null
 
+      const lastUseMatch = [...code.matchAll(/^\s*@use.*\n/gm)].at(-1)
+      if (!lastUseMatch)
+        return {
+          code: `${getReferenceStr(await resolveFn(cssFile, code, id))}\n${code}`,
+          map: null
+        }
+      
+      const before = code.substring(0, lastUseMatch.index)
+      const after = code.substring(lastUseMatch.index + lastUseMatch[0].length)
+
       return {
-        code: `${getReferenceStr(await resolveFn(cssFile, code, id))}${code}`,
+        code: `${before}${getReferenceStr(await resolveFn(cssFile, code, id))}\n${after}`,
         map: null
       }
     }
