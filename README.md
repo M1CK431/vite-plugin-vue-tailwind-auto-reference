@@ -44,8 +44,8 @@ pnpm add -D vite-plugin-vue-tailwind-auto-reference
 ### Basic Setup
 
 To use the plugin, simply import and register it in your Vite configuration file (`vite.config.js` or `vite.config.ts`).\
-By default, the plugin assume your css file is located at `src/index.css`.
-If it is located elsewhere, you can specify it using the [`cssFile` option](#advanced-configuration).
+By default, the plugin assume you are using the default Tailwind theme with no customizations (`@reference "tailwindcss";`).
+In case you have customizations, you can specify the CSS file to use with the [`cssFile` option](#advanced-configuration).
 
 ⚠️ **It must be registered before `tailwindcss()` official plugin!** ⚠️
 
@@ -83,23 +83,23 @@ Then, use `@apply` directive in your Vue component `<style>` block as usual.
 ### Advanced Configuration
 
 The plugin accepts two parameters:
-1. `cssFile`: The path to the Tailwind CSS file.
+1. `cssFile`: The path to your main CSS file.
 2. `opts`: An options object that allows you to customize its behavior.
 
 #### Parameters details
 
-- **cssFile** (string | string[] | CssFileFn): The path to the Tailwind CSS file or an array of paths.
+- **cssFile** (string | string[] | CssFileFn): The path to your main CSS file or an array of paths.
 You can also provide a function that returns the path(s).
-The default CSS file is `./src/index.css`.
+The default is `tailwindcss` ([default Tailwind theme](https://tailwindcss.com/docs/functions-and-directives#reference-directive)).
   
   ```js
-  tailwindAutoReference('./src/tailwind.css')
+  tailwindAutoReference('./src/assets/main.css')
   ```
 
   or with multiple files:
 
   ```js
-  tailwindAutoReference(['./src/tailwind.css', './src/theme.css'])
+  tailwindAutoReference(['./src/assets/main.css', './src/assets/theme.css'])
   ```
 
   or using a function:
@@ -109,8 +109,8 @@ The default CSS file is `./src/index.css`.
     // for ex. if you have multiple product in your codebase, each with a dedicated theme
     // id = '/path/to/your/project/src/productA/app.vue'
     const match = id.match(/\/src\/([^/]+)/);
-    const commonCSS = './src/tailwind.css';
-    return match ? [commonCSS, `./src/${match[1]}-theme.css`] : commonCSS;
+    const commonCSS = './src/assets/main.css';
+    return match ? [commonCSS, `./src/assets/${match[1]}-theme.css`] : commonCSS;
   })
   ```
 
@@ -119,7 +119,7 @@ The default CSS file is `./src/index.css`.
   tailwindAutoReference(async (_code, id) => {
     // for ex. if you have multiple product in your codebase, each with a dedicated theme
     // id = '/path/to/your/project/src/productA/app.vue'
-    const cssFile = [commonCSS];
+    const cssFile = ['./src/assets/main.css'];
     const match = id.match(/\/src\/([^/]+)/);
 
     if (match) await getCSSFromCDN(match[1])
@@ -132,7 +132,7 @@ The default CSS file is `./src/index.css`.
 - **opts.include** (FilterPattern): A list of picomatch patterns that match files to be transformed. The default pattern is `[/\.vue\?.*type=style/]`.
 
   ```js
-  tailwindAutoReference('./src/tailwind.css', {
+  tailwindAutoReference('./src/assets/main.css', {
     include: [/\.vue\?.*type=style/, /\.scss/]
   })
   ```
@@ -140,7 +140,7 @@ The default CSS file is `./src/index.css`.
 - **opts.exclude** (FilterPattern): A list of picomatch patterns that match files to be excluded from transformation.
 
   ```js
-  tailwindAutoReference('./src/tailwind.css', {
+  tailwindAutoReference('./src/assets/main.css', {
     exclude: /productB/ // because productB is not using Tailwind CSS
   })
   ```
@@ -148,7 +148,7 @@ The default CSS file is `./src/index.css`.
 - **opts.skip** (SkipFn): A function that determines whether a file should be skipped. It takes the code and id as arguments and returns a boolean.
 
   ```js
-  tailwindAutoReference('./src/tailwind.css', {
+  tailwindAutoReference('./src/assets/main.css', {
     // ignore files that already contain '@reference'
     skip: (code, _id) => code.includes('@reference')
   })
@@ -168,7 +168,7 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   plugins: [
     vue(),
-    tailwindAutoReference('./src/tailwind.css', {
+    tailwindAutoReference('./src/assets/main.css', {
       include: [/\.vue\?.*type=style/],
       exclude: /node_modules/,
       skip: (code, id) => {
@@ -180,6 +180,31 @@ export default defineConfig({
   ]
 });
 ```
+
+## 🚨 Breaking Changes (v2.0.0)
+
+Starting with version `v2.0.0`, the default value for the `cssFile` option has been changed:
+
+- **Previous default value**: `src/index.css`
+- **New default value**: `tailwindcss`
+
+This change was made to **improve the experience for users who want to use Tailwind CSS v4's default theme**, without being forced to create or reference a custom CSS file just to use the plugin.
+
+### ✅ What you need to do
+
+If you were previously relying on the default `src/index.css` file and **are not explicitly setting** the `cssFile` option, you now need to provide the path to your custom CSS file.
+
+**Before (v1.x):**
+```js
+tailwindAutoReference()
+```
+
+**After (v2.x) — if using a custom CSS file:**
+```js
+tailwindAutoReference('./src/assets/main.css')
+```
+
+👉 **If you're using Tailwind CSS v4's default theme**, no changes are required. The plugin now works out of the box without any configuration.
 
 ## License
 
@@ -220,8 +245,9 @@ By participating in this project you agree to abide by its terms.
 
 ## Sponsoring
 
-If you find this project useful, consider sponsoring it on Buy Me a Coffee.
-Your support will help me continue building great open-source projects just like this. Thank you! 🙏
+If you find this project useful, please consider giving it a **star ⭐ on GitHub** to show your support!
+
+If you'd like to go a step further, you can also **buy me a coffee** ☕ via [Buy Me a Coffee](https://www.buymeacoffee.com/m1ck431). Your support helps me keep building great open-source projects like this one. Thank you! 🙏
 
 <a href="https://www.buymeacoffee.com/m1ck431" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
 
