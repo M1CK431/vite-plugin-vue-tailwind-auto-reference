@@ -31,9 +31,10 @@
     "@types/node": "^24.10.1",
     "eslint": "^9.39.1",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.46.4"
-  },
-  "dependencies": {
+    "typescript-eslint": "^8.46.4",
     "vite": "^7.2.2"
+  },
+  "peerDependencies": {
+    "vite": "^6.0.0 || ^7.0.0"
   }
 }

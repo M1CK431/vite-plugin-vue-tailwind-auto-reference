@@ -7,10 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      vite:
-        specifier: ^7.2.2
-        version: 7.2.2(@types/node@24.10.1)
     devDependencies:
       '@eslint/js':
         specifier: ^9.39.1
@@ -27,6 +23,9 @@ importers:
       typescript-eslint:
         specifier: ^8.46.4
         version: 8.46.4(eslint@9.39.1)(typescript@5.9.3)
+      vite:
+        specifier: ^7.2.2
+        version: 7.2.2(@types/node@24.10.1)
 
 packages:
 
