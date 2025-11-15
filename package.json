@@ -27,13 +27,14 @@
   "author": "M1CK431",
   "license": "MIT",
   "devDependencies": {
-    "@eslint/js": "^9.23.0",
-    "@types/node": "^22.13.13",
-    "eslint": "^9.23.0",
-    "typescript": "^5.8.2",
-    "typescript-eslint": "^8.28.0"
+    "@eslint/js": "^9.39.1",
+    "@types/node": "^24.10.1",
+    "eslint": "^9.39.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.4",
+    "vite": "^7.2.2"
   },
-  "dependencies": {
-    "vite": "^6.2.3"
+  "peerDependencies": {
+    "vite": "^6.0.0 || ^7.0.0"
   }
 }

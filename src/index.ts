@@ -1,5 +1,5 @@
 import { resolve } from "node:path"
-import { createFilter, FilterPattern, ResolvedConfig, Plugin } from "vite"
+import { createFilter, FilterPattern, ResolvedConfig } from "vite"
 
 
 /**
@@ -64,7 +64,7 @@ const resolveFn = (fn: unknown, ...args: unknown[]) =>
 const tailwindAutoReference = (
   cssFile: string | string[] | CssFileFn = "./src/index.css",
   opts = defaultOpts
-): Plugin => {
+): any => {
   const { include, exclude, skip } = { ...defaultOpts, ...opts }
   let root: string, fileFilter: (id: string | unknown) => boolean
 
@@ -91,7 +91,7 @@ const tailwindAutoReference = (
           code: `${getReferenceStr(await resolveFn(cssFile, code, id))}\n${code}`,
           map: null
         }
-      
+
       const before = code.substring(0, lastUseMatch.index)
       const after = code.substring(lastUseMatch.index + lastUseMatch[0].length)
 
