@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-vue-tailwind-auto-reference",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Automatically @reference your Tailwind CSS file in Vue SFC <style> blocks.",
   "repository": "https://github.com/M1CK431/vite-plugin-vue-tailwind-auto-reference",
   "type": "module",
