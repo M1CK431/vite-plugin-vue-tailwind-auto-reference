@@ -1,5 +1,5 @@
 import { resolve } from "node:path"
-import { createFilter, FilterPattern, ResolvedConfig, Plugin } from "vite"
+import { createFilter, FilterPattern, ResolvedConfig } from "vite"
 
 
 /**
@@ -62,9 +62,9 @@ const resolveFn = (fn: unknown, ...args: unknown[]) =>
  * @returns {Object} - The plugin configuration object for Vite.
  */
 const tailwindAutoReference = (
-  cssFile: string | string[] | CssFileFn = "./src/index.css",
+  cssFile: string | string[] | CssFileFn = "tailwindcss",
   opts = defaultOpts
-): Plugin => {
+): any => {
   const { include, exclude, skip } = { ...defaultOpts, ...opts }
   let root: string, fileFilter: (id: string | unknown) => boolean
 
@@ -82,10 +82,23 @@ const tailwindAutoReference = (
       fileFilter = createFilter(include, exclude, { resolve: root })
     },
     transform: async (code: string, id: string) => {
-      if (!fileFilter(id)) return code
-      if (!code.includes("@apply ") || skip(code, id)) return code
+      if (!fileFilter(id)) return null
+      if (!code.includes("@apply ") || skip(code, id)) return null
 
-      return `${getReferenceStr(await resolveFn(cssFile, code, id))}${code}`
+      const lastUseMatch = [...code.matchAll(/^\s*@use.*\n/gm)].at(-1)
+      if (!lastUseMatch)
+        return {
+          code: `${getReferenceStr(await resolveFn(cssFile, code, id))}\n${code}`,
+          map: null
+        }
+
+      const before = code.substring(0, lastUseMatch.index)
+      const after = code.substring(lastUseMatch.index + lastUseMatch[0].length)
+
+      return {
+        code: `${before}${getReferenceStr(await resolveFn(cssFile, code, id))}\n${after}`,
+        map: null
+      }
     }
   }
 }
