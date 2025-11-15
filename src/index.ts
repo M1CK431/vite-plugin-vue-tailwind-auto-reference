@@ -62,7 +62,7 @@ const resolveFn = (fn: unknown, ...args: unknown[]) =>
  * @returns {Object} - The plugin configuration object for Vite.
  */
 const tailwindAutoReference = (
-  cssFile: string | string[] | CssFileFn = "./src/index.css",
+  cssFile: string | string[] | CssFileFn = "tailwindcss",
   opts = defaultOpts
 ): any => {
   const { include, exclude, skip } = { ...defaultOpts, ...opts }
