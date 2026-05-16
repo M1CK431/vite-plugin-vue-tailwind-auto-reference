@@ -19,6 +19,12 @@ A Vite plugin that **automatically adds `@reference` directive to Vue SFC `<styl
 This plugin was tested with Node 20+, Vite 6, Vue 3.5 and Tailwind CSS v4.
 It might (should) works with older versions too, but it's untested and no support will be provided.
 
+## See it in action
+
+[**URL Checker**](https://github.com/M1CK431/url-checker) is a real-world, open-source project built with Vue 3 and Tailwind CSS v4 that uses this plugin. It's a self-hosted solution to detect unwanted changes across your websites' sitemaps—making it a great showcase of how `@apply` directives work seamlessly with automatic `@reference` injection in a production application.
+
+Feel free to browse its source code to see how everything fits together!
+
 ## Installation
 
 You can install the plugin with your preferred package manager, for ex.:
